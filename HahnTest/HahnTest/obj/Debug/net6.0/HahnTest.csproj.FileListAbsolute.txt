@@ -1,0 +1,9 @@
+D:\sonersoft\hanh\HahnTest\HahnTest\obj\Debug\net6.0\HahnTest.csproj.AssemblyReference.cache
+D:\sonersoft\hanh\HahnTest\HahnTest\obj\Debug\net6.0\HahnTest.GeneratedMSBuildEditorConfig.editorconfig
+D:\sonersoft\hanh\HahnTest\HahnTest\obj\Debug\net6.0\HahnTest.AssemblyInfoInputs.cache
+D:\sonersoft\hanh\HahnTest\HahnTest\obj\Debug\net6.0\HahnTest.AssemblyInfo.cs
+D:\sonersoft\hanh\HahnTest\HahnTest\obj\Debug\net6.0\HahnTest.csproj.CoreCompileInputs.cache
+D:\sonersoft\hanh\HahnTest\HahnTest\obj\Debug\net6.0\HahnTest.MvcApplicationPartsAssemblyInfo.cs
+D:\sonersoft\hanh\HahnTest\HahnTest\obj\Debug\net6.0\HahnTest.MvcApplicationPartsAssemblyInfo.cache
+D:\sonersoft\hanh\HahnTest\HahnTest\obj\Debug\net6.0\HahnTest.RazorAssemblyInfo.cache
+D:\sonersoft\hanh\HahnTest\HahnTest\obj\Debug\net6.0\HahnTest.RazorAssemblyInfo.cs

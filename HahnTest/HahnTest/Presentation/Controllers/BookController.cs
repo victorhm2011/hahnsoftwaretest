@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HahnTest.Presentation.Controllers
 {
+    [ApiController]
+    [Route("api/book")]
     public class BookController : Controller
     {
         private readonly IBookService _service;
