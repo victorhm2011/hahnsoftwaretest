@@ -32,16 +32,19 @@ export class BookFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
+      id: new FormControl(null, [Validators.maxLength(500)]),
       title: new FormControl(null, [Validators.required, Validators.maxLength(500)]),
       author: new FormControl(null, [Validators.required, Validators.maxLength(500)]),
       price: new FormControl(null, [Validators.required, Validators.min(0)]),
       publishDate: new FormControl(null, [Validators.required]),
     });
     this.setBook();
+    console.log(this.form.value);
   }
 
   public setBook(): void {
     this.form.patchValue({
+      id: this.data.book.id,
       title: this.data.book.title,
       author: this.data.book.author,
       price: this.data.book.price,
@@ -55,32 +58,27 @@ export class BookFormComponent implements OnInit {
 
   public save() {
     this.book = this.form.value;
-    const errors = this.validator.validate(this.book);
-    if(errors){
-      if(this.data.book !== undefined){
-        this.book.id = this.data.book.id;
-        this.bookService.updateBook(this.book).subscribe(
-          data => {this.openSnackBar(this.bookConstants.UPDATE, this.bookConstants.CONTINUE)},
-          error => {this.openSnackBar(`${this.bookConstants.UPDATE_FAIL}: ${error}`, this.bookConstants.CONTINUE)}
-        );
-      } else {
-        this.bookService.createBook(this.book).subscribe(
-          data => {this.openSnackBar(this.bookConstants.ADD, this.bookConstants.CONTINUE)},
-          error => {this.openSnackBar(`${this.bookConstants.ADD_FAIL}: ${error}`, this.bookConstants.CONTINUE)}
-        );
-      }
-      this.dialogRef.close(this.book);
+    console.log(this.book);
+    if(this.book.id !== undefined){
+      this.bookService.updateBook(this.book);
+      this.openSnackBar(this.bookConstants.UPDATE, this.bookConstants.CONTINUE);
+    } else {
+      this.book.id = "100001";
+      this.bookService.createBook(this.book);
+      this.openSnackBar(this.bookConstants.ADD, this.bookConstants.CONTINUE);
     }
+    this.dialogRef.close(this.book);
     
+  }
+
+  public delete() {
+    console.log(this.data.book.id);
+    this.bookService.deleteBook(this.data.book.id);
+    this.dialogRef.close(this.data.book);
   }
 
   public hasError = (controlName:string, errorName:string) =>{
     return this.form.controls[controlName].hasError(errorName);
-  }
-
-  public delete(): void {
-    this.bookService.deleteBook(this.book.id).subscribe();
-    this.dialogRef.close(this.book);
   }
 
   public openSnackBar(message: string, action: string) {

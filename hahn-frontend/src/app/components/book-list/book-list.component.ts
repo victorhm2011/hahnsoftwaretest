@@ -40,7 +40,7 @@ export class BookListComponent implements OnInit {
     {
       columnDef: 'publishDate',
       header: BookConstants.PUBLISHDATE,
-      cell: (element: Book) => `${element.publishDate}`,
+      cell: (element: Book) => `${element.publishDate.toDateString()}`,
     }
   ];
 
@@ -68,11 +68,7 @@ export class BookListComponent implements OnInit {
   }
 
   public getBooks(): void {
-    this.bookService.getAllBooks()
-    .subscribe(books => {
-      this.dataSource = new MatTableDataSource<Book>(books);
-      this.changeDetectorRefs.detectChanges();
-    });
+    this.dataSource = new MatTableDataSource<Book>(this.bookService.getAllBooks());
   }
 
   public applyFilter(event: Event) {
@@ -97,6 +93,7 @@ export class BookListComponent implements OnInit {
     } );
     dialogRef.afterClosed().subscribe(result => {
       if(result){
+        console.log("elimimnpo");
         this.ngOnInit();
       }
     });
@@ -112,6 +109,7 @@ export class BookListComponent implements OnInit {
     } );
     dialogRef.afterClosed().subscribe(result => {
       if(result){
+        
         this.ngOnInit();
       }
     });
