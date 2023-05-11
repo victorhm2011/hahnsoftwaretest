@@ -78,6 +78,11 @@ export class BookFormComponent implements OnInit {
     return this.form.controls[controlName].hasError(errorName);
   }
 
+  public delete(): void {
+    this.bookService.deleteBook(this.book.id).subscribe();
+    this.dialogRef.close(this.book);
+  }
+
   public openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }

@@ -73,4 +73,10 @@
     &_add{
         color: $first-primary-color;
     }
+
+    &_delete {
+        color: $third-primary-color;
+        margin-left: 100px;
+        margin-top: 8px;
+    }
 }
