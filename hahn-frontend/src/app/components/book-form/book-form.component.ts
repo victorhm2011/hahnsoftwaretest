@@ -7,6 +7,7 @@ import { BookService } from 'src/app/services/book.service';
 import { BookConstants } from 'src/assets/constants/book.constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-book-form',
@@ -22,7 +23,7 @@ export class BookFormComponent implements OnInit {
   public bookConstants = BookConstants;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {book: Book}, public dialog: MatDialog, public dialogRef: MatDialogRef<BookFormComponent>, private datePipe: DatePipe,
-    public bookService: BookService, private _snackBar: MatSnackBar, private route: ActivatedRoute) { 
+    public bookService: BookService, private _snackBar: MatSnackBar, private route: ActivatedRoute, private validator: ValidationService) { 
       
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 110, 0, 1);
@@ -54,19 +55,23 @@ export class BookFormComponent implements OnInit {
 
   public save() {
     this.book = this.form.value;
-    if(this.data.book !== undefined){
-      this.book.id = this.data.book.id;
-      this.bookService.updateBook(this.book).subscribe(
-        data => {this.openSnackBar(this.bookConstants.UPDATE, this.bookConstants.CONTINUE)},
-        error => {this.openSnackBar(`${this.bookConstants.UPDATE_FAIL}: ${error}`, this.bookConstants.CONTINUE)}
-      );
-    } else {
-      this.bookService.createBook(this.book).subscribe(
-        data => {this.openSnackBar(this.bookConstants.ADD, this.bookConstants.CONTINUE)},
-        error => {this.openSnackBar(`${this.bookConstants.ADD_FAIL}: ${error}`, this.bookConstants.CONTINUE)}
-      );
+    const errors = this.validator.validate(this.book);
+    if(errors){
+      if(this.data.book !== undefined){
+        this.book.id = this.data.book.id;
+        this.bookService.updateBook(this.book).subscribe(
+          data => {this.openSnackBar(this.bookConstants.UPDATE, this.bookConstants.CONTINUE)},
+          error => {this.openSnackBar(`${this.bookConstants.UPDATE_FAIL}: ${error}`, this.bookConstants.CONTINUE)}
+        );
+      } else {
+        this.bookService.createBook(this.book).subscribe(
+          data => {this.openSnackBar(this.bookConstants.ADD, this.bookConstants.CONTINUE)},
+          error => {this.openSnackBar(`${this.bookConstants.ADD_FAIL}: ${error}`, this.bookConstants.CONTINUE)}
+        );
+      }
+      this.dialogRef.close(this.book);
     }
-    this.dialogRef.close(this.book);
+    
   }
 
   public hasError = (controlName:string, errorName:string) =>{
