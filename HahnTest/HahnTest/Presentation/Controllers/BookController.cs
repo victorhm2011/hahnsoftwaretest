@@ -24,7 +24,7 @@ namespace HahnTest.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookDto>> GetByIdAsync(int id)
+        public async Task<ActionResult<BookDto>> GetByIdAsync(string id)
         {
             var book = await _service.GetByIdAsync(id);
 
@@ -45,7 +45,7 @@ namespace HahnTest.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAsync(int id, [FromBody] BookDto bookDto)
+        public async Task<ActionResult> UpdateAsync(string id, [FromBody] BookDto bookDto)
         {
             if (id != bookDto.Id)
             {
@@ -66,7 +66,7 @@ namespace HahnTest.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAsync(int id)
+        public async Task<ActionResult> DeleteAsync(string id)
         {
             var existingBook = await _service.GetByIdAsync(id);
 
