@@ -7,7 +7,7 @@ namespace HahnTest.Presentation.DTOs
 {
     public class BookDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         
         [Required]
         public string Title { get; set; }
@@ -24,11 +24,6 @@ namespace HahnTest.Presentation.DTOs
         [Required]
         public string Isbn { get; set; }
 
-        public BookDto()
-        {
-
-        }
-
         public BookDto(Book book)
         {
             Id = book.Id;
@@ -36,7 +31,6 @@ namespace HahnTest.Presentation.DTOs
             Author = book.Author;
             Price = book.Price;
             PublishDate = book.PublishDate;
-            Isbn = book.ISBN.ToString();
         }
 
         public Book ToEntity()
@@ -48,7 +42,6 @@ namespace HahnTest.Presentation.DTOs
                 Author = Author,
                 Price = Price,
                 PublishDate = PublishDate,
-                ISBN = new ISBN(Isbn)
             };
         }
     }
