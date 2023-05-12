@@ -6,7 +6,7 @@ using AutoMapper;
 
 namespace HahnTest.Application.Services
 {
-    public class BookService : IBookService
+    public class BookService
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace HahnTest.Application.Services
             return _mapper.Map<IEnumerable<BookDto>>(books);
         }
 
-        public async Task<BookDto> GetByIdAsync(int id)
+        public async Task<BookDto> GetByIdAsync(string id)
         {
             var book = await _bookRepository.GetByIdAsync(id);
             return _mapper.Map<BookDto>(book);
@@ -32,11 +32,11 @@ namespace HahnTest.Application.Services
         public async Task<BookDto> CreateAsync(BookDto bookDto)
         {
             var book = _mapper.Map<Book>(bookDto);
-            var createdBook = _bookRepository.AddAsync(book);
+            var createdBook = _bookRepository.CreateAsync(book);
             return _mapper.Map<BookDto>(createdBook);
         }
 
-        public async Task<BookDto> UpdateAsync(int id, BookDto bookDto)
+        public async Task<BookDto> UpdateAsync(string id, BookDto bookDto)
         {
             var existingBook = await _bookRepository.GetByIdAsync(id);
             if (existingBook == null)
@@ -44,43 +44,16 @@ namespace HahnTest.Application.Services
                 return null;
             }
             var book = _mapper.Map<Book>(bookDto);
-            var updatedBook = await _bookRepository.UpdateAsync(existingBook, book);
+            var updatedBook = await _bookRepository.UpdateAsync(book);
             return _mapper.Map<BookDto>(updatedBook);
         }
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(string id)
         {
             var existingBook = await _bookRepository.GetByIdAsync(id);
             if (existingBook != null)
             {
                 await _bookRepository.DeleteAsync(existingBook);
             }
-        }
-
-        Task<List<Book>> IBookService.GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Book> IBookService.GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IBookService.AddAsync(Book book)
-        {
-            var book = _mapper.Map<Book>(bookDto);
-            var createdBook = _bookRepository.AddAsync(book);
-            return _mapper.Map<BookDto>(createdBook);
-        }
-
-        Task IBookService.UpdateAsync(Book book)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IBookService.DeleteAsync(Book book)
-        {
-            throw new NotImplementedException();
         }
     }
 }

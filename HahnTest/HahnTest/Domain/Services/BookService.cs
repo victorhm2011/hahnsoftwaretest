@@ -14,17 +14,17 @@ namespace HahnTest.Domain.Services
 
         public async Task<List<Book>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            return (List<Book>)await _repository.GetAllAsync();
         }
 
-        public async Task<Book> GetByIdAsync(int id)
+        public async Task<Book> GetByIdAsync(string id)
         {
             return await _repository.GetByIdAsync(id);
         }
 
         public async Task AddAsync(Book book)
         {
-            await _repository.AddAsync(book);
+            await _repository.CreateAsync(book);
         }
 
         public async Task UpdateAsync(Book book)
