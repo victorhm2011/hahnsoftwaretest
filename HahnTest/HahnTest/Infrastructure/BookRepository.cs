@@ -18,7 +18,7 @@ namespace HahnTest.Infrastructure
             return await _dbContext.Set<Book>().ToListAsync();
         }
 
-        public async Task<Book> GetByIdAsync(int id)
+        public async Task<Book> GetByIdAsync(string id)
         {
             return await _dbContext.Set<Book>().SingleOrDefaultAsync(x => x.Id == id);
         }
@@ -30,14 +30,12 @@ namespace HahnTest.Infrastructure
             return book;
         }
 
-        public async Task<Book> UpdateAsync(Book existingBook, Book updatedBook)
+        public async Task<Book> UpdateAsync(Book updatedBook)
         {
-            existingBook.Title = updatedBook.Title;
-            existingBook.Author = updatedBook.Author;
-            existingBook.PublishDate = updatedBook.PublishDate;
-            existingBook.Price = updatedBook.Price;
-            await _dbContext.SaveChangesAsync();
-            return existingBook;
+           var book = await this.GetByIdAsync(updatedBook.Id);
+           book = updatedBook;
+           await _dbContext.SaveChangesAsync();
+           return book;
         }
 
         public async Task DeleteAsync(Book book)
@@ -46,24 +44,5 @@ namespace HahnTest.Infrastructure
             await _dbContext.SaveChangesAsync();
         }
 
-        Task<List<Book>> IBookRepository.GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Book> IBookRepository.GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IBookRepository.AddAsync(Book book)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IBookRepository.UpdateAsync(Book book)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
