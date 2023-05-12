@@ -1,0 +1,55 @@
+<h2 mat-dialog-title class="form_title">{{bookConstants.BOOK}}</h2>
+<mat-dialog-content [formGroup]="form">
+    <div class="form_container">
+        <mat-form-field class="form_input-field">
+            <input matInput placeholder="{{bookConstants.TITLE}}" type="text" formControlName="title" id="title" class="form_input-container">
+            <mat-error *ngIf="hasError('title', 'required')">The {{bookConstants.TITLE}} is required</mat-error>
+            <mat-error *ngIf="hasError('title', 'maxlength')">{{bookConstants.CHARACTERS}}</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form_container">
+        <mat-form-field class="form_input-field">
+            <input matInput placeholder="{{bookConstants.AUTHOR}}" type="text" formControlName="author" id="author" class="form_input-container">
+            <mat-error *ngIf="hasError('author', 'required')">The {{bookConstants.AUTHOR}} is required</mat-error>
+            <mat-error *ngIf="hasError('author', 'maxlength')">{{bookConstants.CHARACTERS}}</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form_container"> 
+        <mat-form-field class="form_input-field">
+            <input matInput placeholder="{{bookConstants.PRICE}}" type="number" formControlName="price" id="price" class="form_input-container">
+            <mat-error *ngIf="hasError('price', 'required')">The {{bookConstants.PRICE}} is required</mat-error>
+            <mat-error *ngIf="hasError('price', 'min')">{{bookConstants.MINNUMBER}}</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form_container">
+        <mat-form-field class="form_input-field">
+            <mat-label>{{bookConstants.PUBLISHDATE}}</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="publishDate" formControlName="publishDate" id="publishDate" class="form_input-container">
+            <mat-hint>Month/Day/Year</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="publishDate"></mat-datepicker-toggle>
+            <mat-datepicker #publishDate></mat-datepicker>
+            <mat-error *ngIf="hasError('publishDate', 'required')">The {{bookConstants.PUBLISHDATE}} is required</mat-error>
+        </mat-form-field>
+    </div>
+    
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="form_container form_container-button">
+        <button class="mat-raised-button mat-primary button_save"
+                (click)="save()" [disabled]="!form.valid">
+            {{bookConstants.SAVE}}
+        </button>
+        <button class="mat-raised-button button_close"
+                (click)="close()">
+            {{bookConstants.CLOSE}}
+        </button>
+        <a (click)="delete()">
+            <mat-icon class="button_delete">delete</mat-icon>
+        </a>
+    </div>
+</mat-dialog-actions>
+
